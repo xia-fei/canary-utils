@@ -105,18 +105,7 @@ public class MockDataGenerate {
         return null;
     }
 
-    /*
-     * 获取真实 field字段类型
-     * 主要为了支持List 泛型
-     * private Class getRealFieldType(Field field) {
-     * Type genericType = field.getGenericType();
-     * if (ParameterizedType.class.isInstance(genericType)) {
-     * return (Class) ((ParameterizedType) genericType).getActualTypeArguments()[0];
-     * } else {
-     * return (Class) genericType;
-     * }
-     * }
-     */
+
 
 
     /***
