@@ -50,6 +50,8 @@ public class MockAspect {
                         list.add(mockDataGenerate.generateMock(itemClass));
                     }
                     mockObject=list;
+                }else {
+                    throw new RuntimeException(actualClass.toString());
                 }
 
             }
