@@ -10,19 +10,19 @@
     </parent>
 
     <artifactId>wing-insight</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  <dependencies>
-      <dependency>
-          <groupId>com.qccr.saas.wing</groupId>
-          <artifactId>wing-core</artifactId>
-          <version>1.0-SNAPSHOT</version>
-      </dependency>
+    <version>${global.version}</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.qccr.saas.wing</groupId>
+            <artifactId>wing-core</artifactId>
+            <version>${global.version}</version>
+        </dependency>
 
-      <dependency>
-          <groupId>com.qccr.framework</groupId>
-          <artifactId>insight</artifactId>
-          <version>1.6.2</version>
-      </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>com.qccr.framework</groupId>
+            <artifactId>insight</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+    </dependencies>
 
 </project>

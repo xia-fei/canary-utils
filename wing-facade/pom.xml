@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.qccr.saas.wing.facade</groupId>
     <artifactId>wing-facade</artifactId>
-
+    <version>${global.version}</version>
 
 </project>
