@@ -39,3 +39,7 @@ spring.xml  添加如下两段
 
 完成
 
+效果测试
+请运行junit-test 
+com.qccr.saas.wing.insight.test.MockAspectTest
+或者mvn test看效果
