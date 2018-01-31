@@ -110,19 +110,51 @@ public class MockData {
     /**
      * 支持field is null
      */
-    private Object generateValue(Class clazz, Field field) {
+    private Object generateValue(Class valueClass, Field field) {
         MockValue mockValue = field.getAnnotation(MockValue.class);
+        String[] mockValues = null;
         if (mockValue != null) {
-            String randomValue = mockValue.value()[new Random().nextInt(mockValue.value().length)];
-            if (String.class.isAssignableFrom(clazz)) {
-                return randomValue;
-            } else {
-                return NumberUtils.parseNumber(randomValue, getNumberClass(clazz));
-            }
+            mockValues = mockValue.value();
+        }
+        if (String.class.isAssignableFrom(valueClass)) {
+            return generateStringValue(mockValues);
         } else {
-            return generateDefaultValue(clazz);
+            return generateNumberValue(valueClass, mockValues);
         }
     }
+
+
+    /**
+     * 生成字符串
+     *
+     * @param values mock的值
+     * @return 生成的字符串
+     */
+    private Number generateNumberValue(Class numberClass, String[] values) {
+        String numberValue;
+        if (values != null) {
+            numberValue = fetchRandomIndexString(values);
+        } else {
+            numberValue = fetchRandomNumberString();
+        }
+        return NumberUtils.parseNumber(numberValue, getNumberClass(numberClass));
+    }
+
+
+    /**
+     * 生成字符串,values为空生成默认值
+     *
+     * @param values mock的值
+     * @return 生成的字符串
+     */
+    private String generateStringValue(String[] values) {
+        if (values != null) {
+            return fetchRandomIndexString(values);
+        } else {
+            return generateRandomString();
+        }
+    }
+
 
     private Class getNumberClass(Class numberClass) {
         if (int.class.isAssignableFrom(numberClass)) {
@@ -140,14 +172,21 @@ public class MockData {
 
     }
 
-    private Object generateDefaultValue(Class classType) {
-        if (String.class.isAssignableFrom(classType)) {
-            return generateRandomString();
-        } else {
-            return NumberUtils.parseNumber(String.valueOf(new Random().nextInt(this.numberMaxValue)), getNumberClass(classType));
-        }
+
+    private String fetchRandomNumberString() {
+        return String.valueOf(new Random().nextInt(this.numberMaxValue));
     }
 
+    private String fetchRandomIndexString(String[] values) {
+        return values[new Random().nextInt(values.length)];
+    }
+
+
+    /**
+     * 根据randomString生成随机字符串
+     *
+     * @return 随机字符串
+     */
     private String generateRandomString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < this.stringLength; i++) {
@@ -155,5 +194,4 @@ public class MockData {
         }
         return stringBuilder.toString();
     }
-
 }
