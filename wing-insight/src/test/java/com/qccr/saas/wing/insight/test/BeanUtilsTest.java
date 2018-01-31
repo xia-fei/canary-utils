@@ -1,5 +1,6 @@
 package com.qccr.saas.wing.insight.test;
 
+import com.qccr.saas.wing.insight.test.bean.Person;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 

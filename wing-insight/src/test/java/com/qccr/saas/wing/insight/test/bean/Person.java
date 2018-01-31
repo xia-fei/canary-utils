@@ -1,4 +1,4 @@
-package com.qccr.saas.wing.insight.test;
+package com.qccr.saas.wing.insight.test.bean;
 
 public class Person {
     private String name;

@@ -1,4 +1,4 @@
-package com.qccr.saas.wing.core.mock.test.bean;
+package com.qccr.saas.wing.insight.test.bean;
 
 import java.util.List;
 

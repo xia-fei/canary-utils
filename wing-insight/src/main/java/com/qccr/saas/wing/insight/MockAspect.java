@@ -3,6 +3,7 @@ package com.qccr.saas.wing.insight;
 import com.google.common.collect.Lists;
 import com.qccr.knife.result.CommonStateCode;
 import com.qccr.knife.result.Results;
+import com.qccr.saas.wing.core.mock.MockData;
 import com.qccr.saas.wing.core.mock.MockDataGenerate;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,7 +28,7 @@ import java.util.List;
 public class MockAspect {
     private static final Logger LOG = LoggerFactory.getLogger(MockAspect.class);
     private static final String QUERY_POINTCUT_EL = "@annotation(com.qccr.saas.wing.insight.Mock)";
-
+    MockData mockData=new MockData();
 
     @Around(value = QUERY_POINTCUT_EL)
     public Object doQueryAround(final ProceedingJoinPoint joinPoint) throws Exception {
@@ -35,26 +36,10 @@ public class MockAspect {
         Object[] args = joinPoint.getArgs();
         Mock annotation = method.getAnnotation(Mock.class);
         //获取方法的泛型类型
-        MockDataGenerate mockDataGenerate =new MockDataGenerate();
+
         try {
             Type actualClass=getActualClass(method);
-            Object mockObject=null;
-            if(Class.class.isInstance(actualClass)){
-                mockObject= mockDataGenerate.generateMock((Class<?>) actualClass);
-            }else {
-                ParameterizedType parameterizedType= (ParameterizedType) actualClass;
-                if(isList(parameterizedType)){
-                    Class itemClass= (Class) parameterizedType.getActualTypeArguments()[0];
-                    List list= Lists.newArrayList();
-                    for (int i = 0; i < 5; i++) {
-                        list.add(mockDataGenerate.generateMock(itemClass));
-                    }
-                    mockObject=list;
-                }else {
-                    throw new RuntimeException(actualClass.toString());
-                }
-
-            }
+            Object mockObject= mockData.mock(actualClass);
             LOG.info("mock成功,method:{},result:{}",method.getName());
             return Results.newSuccessResult(mockObject,"mock数据");
         }catch (RuntimeException e){

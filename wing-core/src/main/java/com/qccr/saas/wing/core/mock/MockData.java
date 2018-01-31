@@ -12,9 +12,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class MockDate {
+public class MockData {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MockDate.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MockData.class);
 
     private int stringLength = 5;
     private int numberMaxValue = 100;
@@ -23,7 +23,7 @@ public class MockDate {
     private final Set<Class<?>> BASIC_NUMBER_TYPES;
 
 
-    public MockDate() {
+    public MockData() {
         Set<Class<?>> numberTypes = new HashSet<Class<?>>(5 + NumberUtils.STANDARD_NUMBER_TYPES.size());
         numberTypes.add(int.class);
         numberTypes.add(long.class);
