@@ -1,21 +1,19 @@
 package com.qccr.saas.wing.insight.test;
 
-import com.qccr.knife.result.Result;
-import com.qccr.knife.result.Results;
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
-public class MockAspectTest {
+public class MockAspectTest  extends SpringTest{
+    @Autowired
+    MockFacade facade;
     @Test
     public void test1(){
-        Method method=BeanUtils.findDeclaredMethod(MockAspectTest.class,"getResult",new Class[]{});
-        System.out.println(method);
+        System.out.println(JSON.toJSONString(facade.list()));
     }
 
-    Result<List<String>> getResult(){
-        return Results.newResult(null);
+    @Test
+    public void test2(){
+        System.out.println(JSON.toJSONString(facade.list2()));
     }
 }

@@ -1,9 +1,13 @@
 package com.qccr.saas.wing.insight.test.bean;
 
+import com.qccr.saas.wing.facade.mock.MockValue;
+
 import java.util.List;
 
 public class Dog {
+    @MockValue({"小黑","小黄","小白"})
     private List<String> friends;
+    @MockValue({"张三","李四"})
     private String name;
     private double age;
 
