@@ -13,7 +13,7 @@ com.qccr.saas.wing.core.mock.MockData#mock(Type)
 pom引用
 
 &lt;groupId&gt;com.qccr.saas.wing&lt;/groupId&gt;  
-&lt;artifactId>wing-insight&lt;/artifactId&gt;
+&lt;artifactId>wing-insight&lt;/artifactId&gt;  
 &lt;version&gt;1.0.0&lt;/version&gt;
   
 
