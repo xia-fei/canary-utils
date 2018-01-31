@@ -14,7 +14,7 @@ com.qccr.saas.wing.core.mock.MockData#mock(Type)
 
 
 
-##使用指南  
+## 使用指南  
 pom引用
 
 &lt;groupId&gt;com.qccr.saas.wing&lt;/groupId&gt;  
