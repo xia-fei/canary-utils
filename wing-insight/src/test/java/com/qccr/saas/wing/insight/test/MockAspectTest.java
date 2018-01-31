@@ -6,14 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MockAspectTest  extends SpringTest{
     @Autowired
-    MockFacade facade;
+    MockFacade mockFacade;
+    @Test
+    public void test3(){
+        System.out.println(JSON.toJSONString(mockFacade.list3()));
+    }
     @Test
     public void test1(){
-        System.out.println(JSON.toJSONString(facade.list()));
+        System.out.println(JSON.toJSONString(mockFacade.list()));
     }
 
     @Test
     public void test2(){
-        System.out.println(JSON.toJSONString(facade.list2()));
+        System.out.println(JSON.toJSONString(mockFacade.list2()));
     }
 }
