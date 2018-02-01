@@ -8,6 +8,14 @@ public class MockAspectTest  extends SpringTest{
     @Autowired
     MockFacade mockFacade;
     @Test
+    public void test5(){
+        System.out.println(JSON.toJSONString(mockFacade.list5()));
+    }
+    @Test
+    public void test4(){
+        System.out.println(JSON.toJSONString(mockFacade.list4()));
+    }
+    @Test
     public void test3(){
         System.out.println(JSON.toJSONString(mockFacade.list3()));
     }

@@ -1,9 +1,8 @@
 package com.qccr.saas.wing.insight;
 
-import com.google.common.base.Preconditions;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.qccr.commons.ro.PagedDataRO;
-import com.qccr.knife.result.CommonStateCode;
 import com.qccr.knife.result.Result;
 import com.qccr.knife.result.Results;
 import com.qccr.saas.wing.core.mock.MockData;
@@ -35,16 +34,15 @@ public class MockAspect {
     @Around(value = QUERY_POINTCUT_EL)
     public Object doQueryAround(final ProceedingJoinPoint joinPoint) throws Exception {
         Method method = MethodSignature.class.cast(joinPoint.getSignature()).getMethod();
-        Object[] args = joinPoint.getArgs();
-        Mock annotation = method.getAnnotation(Mock.class);
+
         //获取方法的泛型类型
-        Type methodReturnType=method.getGenericReturnType();
-        try {
-            Object mockObject;
-            Type resultType = getResultClass(methodReturnType);
-            Preconditions.checkNotNull(resultType,"%s 不是result类型",methodReturnType.toString());
+        Type methodReturnType = method.getGenericReturnType();
+        Object result;
+        Type resultType = getResultClass(methodReturnType);
+        if (resultType != null) {
             Class pageDataClass = getPageClass(resultType);
             if (pageDataClass != null) {
+                //page返回类型
                 PagedDataRO pagedDataRO = new PagedDataRO();
                 List<Object> list = Lists.newArrayList();
                 for (int i = 0; i < 10; i++) {
@@ -54,16 +52,18 @@ public class MockAspect {
                 pagedDataRO.setPageSize(list.size());
                 pagedDataRO.setPageNo(1);
                 pagedDataRO.setTotalSize(100);
-                mockObject = pagedDataRO;
+                result = Results.newSuccessResult(pagedDataRO, "mock数据");
             } else {
-                mockObject = mockData.mock(resultType);
+                //正常result返回类型
+                result = Results.newSuccessResult(mockData.mock(resultType), "mock数据");
             }
-            LOG.info("mock成功,method:{},result:{}", method.getName());
-            return Results.newSuccessResult(mockObject, "mock数据");
-        } catch (RuntimeException e) {
-            LOG.error("mock失败", e);
-            return Results.newFailedResult(CommonStateCode.INNER_SERVER_ERROR, "mock数据生成失败");
+
+        } else {
+            //非result返回类型
+            result = mockData.mock(methodReturnType);
         }
+        LOG.info("MOCK成功:{}", JSON.toJSONString(result));
+        return result;
     }
 
     private Class getPageClass(Type type) {
@@ -77,11 +77,11 @@ public class MockAspect {
     }
 
 
-    private Type getResultClass(Type type){
-        if(ParameterizedType.class.isInstance( type)) {
-            ParameterizedType parameterizedType= (ParameterizedType) type;
+    private Type getResultClass(Type type) {
+        if (ParameterizedType.class.isInstance(type)) {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
             if (Result.class.isAssignableFrom((Class<?>) parameterizedType.getRawType())) {
-                 return parameterizedType.getActualTypeArguments()[0];
+                return parameterizedType.getActualTypeArguments()[0];
             }
         }
         return null;

@@ -27,4 +27,14 @@ public class MockFacade {
     public Result<PagedDataRO<Person>> list3(){
               return null;
     }
+
+    @Mock
+    public Dog list4(){
+        return null;
+    }
+
+    @Mock
+    public List<Dog> list5(){
+        return null;
+    }
 }

@@ -12,7 +12,7 @@ public class SpringTest {
 
     @Test
     public void test(){
-
+        System.out.println("Spring上下文启动成功");
     }
 
 }
