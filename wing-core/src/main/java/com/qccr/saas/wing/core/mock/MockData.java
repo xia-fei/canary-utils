@@ -61,7 +61,7 @@ public class MockData {
     private Object generateTree(Type type, Field field) {
         if (Class.class.isInstance(type)) {
             Class typeClass = (Class) type;
-            if (isSimpleType(typeClass)) {
+            if (canGenerateValue(typeClass)) {
                 return generateValue(typeClass, field);
             } else {
                 return generateObject(typeClass);
@@ -106,6 +106,13 @@ public class MockData {
     private boolean isSimpleType(Class clazz) {
         return String.class.isAssignableFrom(clazz) || this.BASIC_NUMBER_TYPES.contains(clazz);
     }
+    private boolean canGenerateValue(Class clazz){
+        return isSimpleType(clazz)||isDateType(clazz);
+    }
+
+    private boolean isDateType(Class clazz){
+        return Date.class.isAssignableFrom(clazz)|| java.sql.Date.class.isAssignableFrom(clazz);
+    }
 
     /**
      * 支持field is null
@@ -118,10 +125,22 @@ public class MockData {
         }
         if (String.class.isAssignableFrom(valueClass)) {
             return generateStringValue(mockValues);
-        } else {
+        } else if(isDateType(valueClass)){
+            return generateDateValue(valueClass);
+        }else {
             return generateNumberValue(valueClass, mockValues);
         }
     }
+    private Object generateDateValue(Class valueClass){
+        if(Date.class.isAssignableFrom(valueClass)){
+            return new Date();
+        }else if(java.sql.Date.class.isAssignableFrom(valueClass)){
+            return new java.sql.Date(System.currentTimeMillis());
+        }else {
+            throw new RuntimeException("不认识的Date类型"+valueClass.toString());
+        }
+    }
+
 
 
     /**
