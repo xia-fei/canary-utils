@@ -5,7 +5,6 @@ import com.qccr.saas.wing.core.mock.generate.ClassGenerateHandler;
 import java.util.Random;
 
 public class StringGenerateHandler extends AbstractGenerateHandler implements ClassGenerateHandler {
-    private String randomString = "我爱中国";
 
     @Override
     public boolean canHandler(Class clazz) {
@@ -19,6 +18,7 @@ public class StringGenerateHandler extends AbstractGenerateHandler implements Cl
 
     private String generateRandomString() {
         StringBuilder stringBuilder = new StringBuilder();
+        String randomString = "汽车超人";
         for (int i = 0; i < 5; i++) {
             stringBuilder.append(randomString.toCharArray()[new Random().nextInt(randomString.toCharArray().length)]);
         }
