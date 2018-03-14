@@ -1,10 +1,20 @@
 package com.qccr.saas.wing.insight.test.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Person implements Serializable{
     private String name;
     private Integer age;
+    private Date birthday;
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
     public String getName() {
         return name;
