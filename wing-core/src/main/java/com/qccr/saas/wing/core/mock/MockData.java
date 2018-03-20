@@ -6,12 +6,10 @@ import com.qccr.saas.wing.facade.mock.MockValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.PropertyAccessorFactory;
-import org.springframework.cglib.core.ReflectUtils;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -94,24 +92,27 @@ public class MockData {
     /**
      * 用get set方法生成对象
      */
-   private Object generateObject2(Class clazz){
-       Object mappedObject = BeanUtils.instantiate(clazz);
-       BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(mappedObject);
-       PropertyDescriptor[] getters = ReflectUtils.getBeanGetters(clazz);
-       for (PropertyDescriptor propertyDescriptor:getters){
-           if(propertyDescriptor.getWriteMethod()!=null&&propertyDescriptor.getReadMethod()!=null){
-               String propertyName=propertyDescriptor.getName();
-               Field propertyField=null;
-               try {
-                    propertyField=clazz.getDeclaredField(propertyName);
-               } catch (NoSuchFieldException e) {
-                   LOGGER.warn("获取Field失败",e);
-               }
-               bw.setPropertyValue(propertyName,generateTree(propertyDescriptor.getReadMethod().getGenericReturnType(),propertyField));
-           }
-       }
-       return mappedObject;
-   }
+    private Object generateObject2(Class clazz) {
+        Object mappedObject = BeanUtils.instantiate(clazz);
+        PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(clazz);
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+            if (propertyDescriptor.getWriteMethod() != null && propertyDescriptor.getReadMethod() != null) {
+                String propertyName = propertyDescriptor.getName();
+                Field propertyField = null;
+                try {
+                    propertyField = clazz.getDeclaredField(propertyName);
+                } catch (NoSuchFieldException e) {
+                    LOGGER.warn("获取Field失败", e);
+                }
+                try {
+                    propertyDescriptor.getWriteMethod().invoke(mappedObject, generateTree(propertyDescriptor.getReadMethod().getGenericReturnType(), propertyField));
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return mappedObject;
+    }
 
 
     private String[] getFieldValues(Field field) {

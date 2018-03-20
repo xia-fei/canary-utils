@@ -9,6 +9,10 @@ public class MockAspectTest  extends SpringTest{
     MockFacade mockFacade;
 
     @Test
+    public void  testNestRO(){
+        System.out.println(JSON.toJSONString(mockFacade.nestROResult()));
+    }
+    @Test
     public void testPerson(){
         System.out.println(JSON.toJSONString(mockFacade.person()));
     }

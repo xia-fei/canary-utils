@@ -9,6 +9,7 @@ import java.beans.PropertyDescriptor;
 
 public class BeanUtilsTest {
 
+
     @Test
     public void test1() {
         PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(Person.class);

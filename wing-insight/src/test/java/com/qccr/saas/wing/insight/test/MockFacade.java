@@ -5,6 +5,7 @@ import com.qccr.knife.result.Result;
 import com.qccr.saas.wing.insight.Mock;
 import com.qccr.saas.wing.insight.test.bean.CatRO;
 import com.qccr.saas.wing.insight.test.bean.Dog;
+import com.qccr.saas.wing.insight.test.bean.NestRO;
 import com.qccr.saas.wing.insight.test.bean.Person;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,10 @@ import java.util.List;
 @Component
 public class MockFacade {
 
+    @Mock
+    public Result<NestRO> nestROResult(){
+        return null;
+    }
     @Mock
     public Result<Person> person(){
         return null;
