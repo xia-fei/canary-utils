@@ -7,6 +7,13 @@ public class Person implements Serializable{
     private String name;
     private Integer age;
     private Date birthday;
+    private Integer sex;
+
+
+
+    public Integer getSex() {
+        return sex;
+    }
 
     public Date getBirthday() {
         return birthday;

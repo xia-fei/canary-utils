@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MockAspectTest  extends SpringTest{
     @Autowired
     MockFacade mockFacade;
+
+    @Test
+    public void testPerson(){
+        System.out.println(JSON.toJSONString(mockFacade.person()));
+    }
     @Test
     public void test6(){
         System.out.println(JSON.toJSONString(mockFacade.roTest()));

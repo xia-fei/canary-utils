@@ -14,6 +14,10 @@ import java.util.List;
 public class MockFacade {
 
     @Mock
+    public Result<Person> person(){
+        return null;
+    }
+    @Mock
     public Result<CatRO> roTest(){
         return null;
     }
