@@ -15,7 +15,7 @@ public class DateGenerateHandler extends AbstractGenerateHandler implements Clas
         if(Date.class.isAssignableFrom(valueClass)){
             return new Date();
         }else {
-            return new Date(System.currentTimeMillis());
+            return new java.sql.Date(System.currentTimeMillis());
         }
     }
 }
