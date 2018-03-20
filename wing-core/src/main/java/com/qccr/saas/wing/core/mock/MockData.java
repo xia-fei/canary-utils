@@ -72,7 +72,9 @@ public class MockData {
         for (Field field : clazz.getDeclaredFields()) {
             try {
                 field.setAccessible(true);
-                field.set(objMapper, generateTree(field.getGenericType(), field));
+                if (field.get(objMapper) == null) {
+                    field.set(objMapper, generateTree(field.getGenericType(), field));
+                }
             } catch (IllegalAccessException e) {
                 LOGGER.error("不能set的字段", e);
             }
