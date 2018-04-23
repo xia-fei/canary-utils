@@ -8,6 +8,7 @@
         <module>wing-insight</module>
         <module>wing-core</module>
         <module>wing-facade</module>
+        <module>wing-mybatis</module>
     </modules>
 
     <groupId>com.qccr.saas.wing</groupId>

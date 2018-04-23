@@ -36,9 +36,8 @@ public class NumberGenerateHandler extends AbstractGenerateHandler implements Cl
     }
 
     private String randomNumberText() {
-        return String.valueOf(new Random().nextInt(1000));
+        return String.valueOf(new Random().nextInt(1000)/100D);
     }
-
 
     private Class getNumberClass(Class numberClass) {
         if (int.class.isAssignableFrom(numberClass)) {
