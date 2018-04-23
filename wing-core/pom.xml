@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>wing-core</artifactId>
-    <version>${parent.version}</version>
+    <version>${global.version}</version>
     <dependencies>
         <dependency>
             <groupId>com.qccr.saas.wing</groupId>

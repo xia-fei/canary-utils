@@ -13,10 +13,10 @@
 
     <groupId>com.qccr.saas.wing</groupId>
     <artifactId>parent</artifactId>
-    <!-- 父pom版本号，不需要变-->
-    <version>1.7.5</version>
+    <!-- 父pom版本号-->
+    <version>1.0-SNAPSHOT</version>
     <properties>
-        <!--版本号升级请改这里-->
+        <global.version>1.7.5</global.version>
         <argLine>-Dfile.encoding=UTF-8</argLine>
     </properties>
     <dependencies>

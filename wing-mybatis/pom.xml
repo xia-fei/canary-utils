@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>wing-mybatis</artifactId>
-    <version>${parent.version}</version>
+    <version>${global.version}</version>
   <dependencies>
       <dependency>
           <groupId>org.mybatis</groupId>
