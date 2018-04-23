@@ -10,12 +10,12 @@
     </parent>
 
     <artifactId>wing-insight</artifactId>
-    <version>${global.version}</version>
+    <version>${parent.version}</version>
     <dependencies>
         <dependency>
             <groupId>com.qccr.saas.wing</groupId>
             <artifactId>wing-core</artifactId>
-            <version>${global.version}</version>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>

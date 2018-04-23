@@ -31,12 +31,24 @@ public class NumberGenerateHandler extends AbstractGenerateHandler implements Cl
 
     @Override
     public Object generateValue(Class valueClass, String[] mockValues) {
-        String value = randomValue(mockValues, new String[]{randomNumberText()});
+        String value = randomValue(mockValues, new String[]{randomNumberText(isDecimals(valueClass))});
         return NumberUtils.parseNumber(value, getNumberClass(valueClass));
     }
 
-    private String randomNumberText() {
-        return String.valueOf(new Random().nextInt(1000)/100D);
+    private boolean isDecimals(Class valueClass){
+        return Double.class.isAssignableFrom(valueClass)
+                || Float.class.isAssignableFrom(valueClass)
+                ||float.class.isAssignableFrom(valueClass)
+                ||double.class.isAssignableFrom(valueClass);
+    }
+
+    private String randomNumberText(boolean isDecimals) {
+        if(isDecimals){
+            return String.valueOf(new Random().nextInt(1000)/100D);
+        }else {
+            return String.valueOf(new Random().nextInt(1000));
+        }
+
     }
 
     private Class getNumberClass(Class numberClass) {

@@ -9,7 +9,8 @@ public class Dog {
     private List<String> friends;
     @MockValue({"张三","李四"})
     private String name;
-    private double age;
+    private Double age;
+
 
     public List<String> getFriends() {
         return friends;

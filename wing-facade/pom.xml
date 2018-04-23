@@ -10,6 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>wing-facade</artifactId>
-    <version>${global.version}</version>
+    <version>${parent.version}</version>
 
 </project>
