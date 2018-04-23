@@ -16,7 +16,7 @@
     <!-- 父pom版本号-->
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <global.version>1.7.5</global.version>
+        <global.version>1.8.0</global.version>
         <argLine>-Dfile.encoding=UTF-8</argLine>
     </properties>
     <dependencies>
