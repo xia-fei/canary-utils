@@ -21,8 +21,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * @author yeWanQing
- * @since 2017/5/23
+ *
  */
 @Aspect
 @Order(Ordered.HIGHEST_PRECEDENCE)
