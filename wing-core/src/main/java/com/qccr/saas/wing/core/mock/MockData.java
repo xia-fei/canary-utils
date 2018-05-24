@@ -19,7 +19,6 @@ public class MockData {
     private final static Logger LOGGER = LoggerFactory.getLogger(MockData.class);
     private final DataGenerateFactory DATA_GENERATE_FACTORY;
     private KeyCount keyCount = new KeyCount();
-    private int classDepth = 3;
     private int listSize = 3;
 
 
@@ -27,13 +26,7 @@ public class MockData {
         DATA_GENERATE_FACTORY = new DataGenerateFactory();
     }
 
-    public void setClassDepth(int classDepth) {
-        this.classDepth = classDepth;
-    }
 
-    public void setListSize(int listSize) {
-        this.listSize = listSize;
-    }
 
     public Object mock(Type type) {
         return generateTree(type, null);
