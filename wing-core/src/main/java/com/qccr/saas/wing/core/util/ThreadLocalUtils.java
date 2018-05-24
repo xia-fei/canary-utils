@@ -4,6 +4,10 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
+/**
+ * @author 夏飞
+ * 线程上下文
+ */
 public class ThreadLocalUtils {
 
     private static final LoadingCache<String,ThreadLocal<Object>> THREAD_LOCAL_CACHE=CacheBuilder.newBuilder().build(new CacheLoader<String, ThreadLocal<Object>>() {
