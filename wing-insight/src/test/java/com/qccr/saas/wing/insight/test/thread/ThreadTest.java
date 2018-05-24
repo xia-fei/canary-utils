@@ -1,5 +1,7 @@
 package com.qccr.saas.wing.insight.test.thread;
 
+import com.qccr.saas.wing.core.util.ThreadLocalUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.LinkedBlockingDeque;
@@ -9,6 +11,36 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadTest {
 
+    @Test
+    public void testThreadLocal(){
+        ThreadLocalUtils.set("userId",2);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {
+
+                }
+                ThreadLocalUtils.set("userId",1);
+                Assert.assertEquals(1,ThreadLocalUtils.get("userId"));
+            }
+        }.start();
+        new Thread(){
+            @Override
+            public void run() {
+                ThreadLocalUtils.set("userId",3);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignored) {
+                }
+                Assert.assertEquals(3,ThreadLocalUtils.get("userId"));
+            }
+        }.start();
+
+        Assert.assertEquals(2,ThreadLocalUtils.get("userId"));
+
+    }
     @Test
     public void control(){
         outer: for (int i = 0; i < 10; i++) {

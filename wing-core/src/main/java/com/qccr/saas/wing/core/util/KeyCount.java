@@ -1,4 +1,4 @@
-package com.qccr.saas.wing.core.mock;
+package com.qccr.saas.wing.core.util;
 
 import com.google.common.base.MoreObjects;
 
