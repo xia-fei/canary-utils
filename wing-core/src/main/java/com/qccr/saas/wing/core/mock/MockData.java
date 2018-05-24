@@ -18,13 +18,17 @@ public class MockData {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MockData.class);
     private final DataGenerateFactory DATA_GENERATE_FACTORY;
-
-
+    private KeyCount keyCount = new KeyCount();
+    private int classDepth = 3;
     private int listSize = 3;
 
 
     public MockData() {
         DATA_GENERATE_FACTORY = new DataGenerateFactory();
+    }
+
+    public void setClassDepth(int classDepth) {
+        this.classDepth = classDepth;
     }
 
     public void setListSize(int listSize) {
@@ -53,6 +57,11 @@ public class MockData {
             return list;
         }
         throw new IllegalArgumentException("未能转换的类型:" + String.valueOf(type));
+    }
+
+    private boolean isOverDepth(Class typeClass) {
+        keyCount.increment(typeClass.getName());
+        return keyCount.get(typeClass.getName()) > 3;
     }
 
     private Class getListClass(Type type) {
