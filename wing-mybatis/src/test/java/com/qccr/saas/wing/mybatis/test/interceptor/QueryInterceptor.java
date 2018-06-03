@@ -1,4 +1,4 @@
-package com.qccr.saas.wing.mybatis.test;
+package com.qccr.saas.wing.mybatis.test.interceptor;
 
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.Executor;
@@ -8,17 +8,10 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.Properties;
-@Intercepts(
-        {@Signature(
-        type= Executor.class,
-        method = "query",
-        args = {MappedStatement.class,Object.class, RowBounds.class, ResultHandler.class})})
-public class MyInterceptor implements Interceptor {
+@Intercepts(@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}))
+public class QueryInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        Object paramObject=invocation.getArgs()[1];
-        MapperMethod.ParamMap paramMap= (MapperMethod.ParamMap) paramObject;
-        paramMap.put("userId",false);
         return invocation.proceed();
     }
 

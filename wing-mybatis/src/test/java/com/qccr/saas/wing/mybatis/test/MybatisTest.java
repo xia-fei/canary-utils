@@ -10,32 +10,24 @@ import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.Test;
 
-public class MybatisTest {
+public class MybatisTest extends AbstractMybatisTest {
     @Test
-    public void testSqlSession(){
-        PooledDataSource dataSource =new PooledDataSource();
-        dataSource.setUsername("toowell");
-        dataSource.setPassword("toowell2013db");
-        dataSource.setUrl("jdbc:mysql://192.168.5.122:3306/test");
-        dataSource.setDriver("com.mysql.jdbc.Driver");
+    public void test(){
+        System.out.println(mapper.test());
+    }
 
-        TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        Environment environment = new Environment("development", transactionFactory, dataSource);
-        Configuration configuration = new Configuration(environment);
-        configuration.addMapper(BlogMapper.class);
-        configuration.addInterceptor(new MyInterceptor());
+    @Test
+    public void testUpdate(){
+        System.out.println(mapper.updateName("sss",3));
+    }
 
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-        SqlSession sqlSession=sqlSessionFactory.openSession();
-        BlogMapper blogMapper=sqlSession.getMapper(BlogMapper.class);
-        /*System.out.println(blogMapper.selectValue("156","dsd"));*/
+    @Test
+    public void insert(){
+        System.out.println(mapper.addName("ddd"));
+    }
 
-
-        Parameters parameters=new Parameters();
-        parameters.setIsReward(true);
-        System.out.println(blogMapper.selectBoole(parameters));
-        parameters.setIsReward(false);
-        System.out.println(blogMapper.selectBoole(parameters));
-
+    @Test
+    public void insertSystemUser(){
+        System.out.println(mapper.addSystemUser("ss",1));
     }
 }
