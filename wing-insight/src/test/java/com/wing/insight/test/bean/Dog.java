@@ -1,7 +1,7 @@
 package com.wing.insight.test.bean;
 
 
-import com.qccr.saas.wing.facade.mock.MockValue;
+import com.wing.facade.mock.MockValue;
 
 import java.util.List;
 

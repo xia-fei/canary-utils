@@ -19,7 +19,7 @@ model分三部分
 ## mock测试使用指南  
 pom引用
 ``` xml
-<groupId>com.qccr.saas.wing</groupId>
+<groupId>com.wing</groupId>
 <artifactId>wing-insight</artifactId>
 <version>1.0.0</version>
 ```

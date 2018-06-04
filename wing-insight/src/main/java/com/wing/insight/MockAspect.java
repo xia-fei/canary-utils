@@ -28,7 +28,7 @@ import java.util.List;
 public class MockAspect {
     private static final Logger LOG = LoggerFactory.getLogger(MockAspect.class);
     private static final String QUERY_POINTCUT_EL = "@annotation(Mock)";
-    MockData mockData = new MockData();
+    private MockData mockData = new MockData();
 
     @Around(value = QUERY_POINTCUT_EL)
     public Object doQueryAround(final ProceedingJoinPoint joinPoint) throws Exception {

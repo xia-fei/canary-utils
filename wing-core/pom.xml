@@ -12,7 +12,7 @@
     <version>${global.version}</version>
     <dependencies>
         <dependency>
-            <groupId>com.qccr.saas.wing</groupId>
+            <groupId>com.wing</groupId>
             <artifactId>wing-facade</artifactId>
             <version>${global.version}</version>
         </dependency>

@@ -1,8 +1,8 @@
 package com.wing.core.mock;
 
 import com.google.common.collect.Lists;
-import com.qccr.saas.wing.facade.mock.MockValue;
 import com.wing.core.mock.generate.DataGenerateFactory;
+import com.wing.facade.mock.MockValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
