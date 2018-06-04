@@ -6,7 +6,7 @@
 <br>
 model分三部分  
 1.**wing-insight** 依赖 insight上下文  
-2.**wing-core** 核心算法代码不依赖insight上线文  
+2.**wing-core** 核心算法代码不依赖insight上下文  
 3.**wing-facade** 需要facade 来引入，以使用@mockValue
 <br>    
 <br>
