@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <plugins>
-        <plugin interceptor="com.qccr.saas.wing.mybatis.test.interceptor.UpdateInterceptor"/>
+        <plugin interceptor="com.wing.mybatis.test.interceptor.UpdateInterceptor"/>
     </plugins>
     <environments default="development">
         <environment id="development">

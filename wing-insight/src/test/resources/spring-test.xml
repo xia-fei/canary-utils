@@ -8,6 +8,6 @@
  http://www.springframework.org/schema/aop/spring-aop-4.1.xsd ">
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <bean class="com.qccr.saas.wing.insight.test.MockFacade"/>
-    <bean class="com.qccr.saas.wing.insight.MockAspect"/>
+    <bean class="com.wing.insight.test.MockFacade"/>
+    <bean class="com.wing.insight.MockAspect"/>
 </beans>

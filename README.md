@@ -11,7 +11,7 @@ model分三部分
 <br>    
 <br>
 此方法是生成测试RO的入口,之所以用Type作为参数是为了支持List泛型结构  
-`com.qccr.saas.wing.core.mock.MockData#mock(Type)`
+`MockData#mock(Type)`
 
 
 
@@ -30,7 +30,7 @@ spring.xml  添加如下两段
 
 ``` xml
 <aop:aspectj-autoproxy proxy-target-class="true"/> 
-<bean class="com.qccr.saas.wing.insight.MockAspect"/>
+<bean class="MockAspect"/>
 ```
 
 第一步：  
@@ -47,12 +47,12 @@ spring.xml  添加如下两段
 
 效果测试
 请运行junit-test 
-`com.qccr.saas.wing.insight.test.MockAspectTest`  
+`MockAspectTest`  
 或者mvn test看效果
 
 
 #### 部分工具开发指南
-`com.qccr.saas.wing.core.util.ThreadLocalUtils`  
+`ThreadLocalUtils`  
 线程本地变量,作用于当前线上下文传值  
 例如 
 controller层 `ThreadLocalUtils.set("userId",request.getParameter("userId"));`  

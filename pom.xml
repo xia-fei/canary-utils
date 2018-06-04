@@ -11,7 +11,7 @@
         <module>wing-mybatis</module>
     </modules>
 
-    <groupId>com.qccr.saas.wing</groupId>
+    <groupId>com.wing</groupId>
     <artifactId>parent</artifactId>
     <!-- 父pom版本号-->
     <version>1.0-SNAPSHOT</version>
