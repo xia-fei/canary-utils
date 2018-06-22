@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadTest {
 
+
+
     @Test
     public void testThreadLocal(){
         ThreadLocalUtils.set("userId",2);

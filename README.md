@@ -51,9 +51,74 @@ spring.xml  添加如下两段
 或者mvn test看效果
 
 
-#### 部分工具开发指南
-`ThreadLocalUtils`  
+## 部分工具开发指南
+
+ **`ThreadLocalUtils`**  
 线程本地变量,作用于当前线上下文传值  
 例如 
 controller层 `ThreadLocalUtils.set("userId",request.getParameter("userId"));`  
-dao层 `ThreadLocalUtils.get("userId");`
+dao层 `ThreadLocalUtils.get("userId")`
+
+
+ **`com.wing.core.thread.HeavyThreadExecution`**  
+处理频繁的更新的操作,只需要更新优先级最高的这种任务
+eg:
+``` java
+       //定义任务优先级
+        Comparator<InsertDBRunnable> comparator = new Comparator<InsertDBRunnable>() {
+            @Override
+            public int compare(InsertDBRunnable o1, InsertDBRunnable o2) {
+                return Integer.compare(o1.getCount(), o2.getCount());
+            }
+        };
+        //创建 慢任务处理器
+        HeavyThreadExecution<InsertDBRunnable> execution = new HeavyThreadExecution<>(comparator);
+
+        for (int i = 0; i < 30; i++) {
+            try {
+                Thread.sleep(new Random().nextInt(50));
+            } catch (InterruptedException ignored) {
+            }
+            System.out.println("当前用户访问人数:" + i);
+            //模拟业务平凡插入
+            execution.execute(new InsertDBRunnable(i));
+        }
+```
+### console
+``` text
+当前用户访问人数:0
+当前用户访问人数:1
+当前用户访问人数:2
+当前用户访问人数:3
+当前用户访问人数:4
+当前用户访问人数:5
+当前用户访问人数:6
+当前用户访问人数:7
+当前用户访问人数:8
+当前用户访问人数:9
+当前用户访问人数:10
+当前用户访问人数:11
+当前用户访问人数:12
+当前用户访问人数:13
+当前人数插入DB:0
+当前用户访问人数:14
+当前用户访问人数:15
+当前用户访问人数:16
+当前用户访问人数:17
+当前用户访问人数:18
+当前用户访问人数:19
+当前用户访问人数:20
+当前用户访问人数:21
+当前用户访问人数:22
+当前用户访问人数:23
+当前人数插入DB:13
+当前用户访问人数:24
+当前用户访问人数:25
+当前用户访问人数:26
+当前用户访问人数:27
+当前用户访问人数:28
+当前用户访问人数:29
+当前人数插入DB:23
+当前人数插入DB:29
+线程池任务执行完成
+```
