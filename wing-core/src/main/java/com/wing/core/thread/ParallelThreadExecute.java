@@ -46,7 +46,11 @@ public class ParallelThreadExecute {
 
         @Override
         public void run() {
-            runnable.run();
+            try {
+                runnable.run();
+            } catch (Throwable throwable) {
+                LOGGER.error("任务执行异常", throwable);
+            }
             countDownLatch.countDown();
         }
     }
