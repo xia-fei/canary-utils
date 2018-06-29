@@ -20,7 +20,7 @@ public class ParallelThreadExecute {
         runnableList.add(runnable);
     }
 
-    public void start() {
+    public void await() {
         CountDownLatch countDownLatch = new CountDownLatch(runnableList.size());
         for (Runnable runnable : runnableList) {
             new Thread(new CountDownRunnable(runnable, countDownLatch)).start();

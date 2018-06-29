@@ -33,7 +33,7 @@ public class ParallelThreadExecuteTest {
                 System.out.println("33");
             }
         });
-        parallelThreadExecute.start();
+        parallelThreadExecute.await();
         System.out.println("全部执行完成");
 
     }
