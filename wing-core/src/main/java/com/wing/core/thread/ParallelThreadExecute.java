@@ -30,6 +30,7 @@ public class ParallelThreadExecute {
         } catch (InterruptedException e) {
             LOGGER.error("多线程异常结束", e);
         }
+        runnableList.clear();
     }
 
 
