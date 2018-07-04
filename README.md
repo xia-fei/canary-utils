@@ -122,3 +122,56 @@ eg:
 当前人数插入DB:29
 线程池任务执行完成
 ```
+
+ **`com.wing.core.thread.ParallelThreadExecute`**  
+多线程处理不需要同步执行的代码,然后等所有结果完成再返回
+eg:
+``` java
+ParallelThreadExecute parallelThreadExecute=new ParallelThreadExecute();
+       parallelThreadExecute.run(new Runnable() {
+                                           @Override
+                                           public void run() {
+                                               int deptId = authDeptService.queryHasStatisticCategoryDeptId(queryRO.getStoreId());
+                                               storeReport2RO.setCategoryIndexList(getCategoryTurnover(queryRO, deptId));
+                                           }
+                                       }
+             );
+             parallelThreadExecute.run(new Runnable() {
+                 @Override
+                 public void run() {
+                     storeReport2RO.setVipCardCostRO(getVipCardCostRO(queryRO));
+                 }
+             });
+             parallelThreadExecute.run(new Runnable() {
+                 @Override
+                 public void run() {
+                     storeReport2RO.setCleanCarCount(getCleanCar(queryRO));
+                 }
+             });
+             parallelThreadExecute.run(new Runnable() {
+                 @Override
+                 public void run() {
+                     StoreQueryDO storeQueryDO = StoreQueryDOConvert.parseQueryDO(queryRO);
+                     CapitalPayTypeRO capitalPayTypeRO = capitalInflowService.getPayType(storeQueryDO);
+                     storeReport2RO.setCapitalPayTypeRO(capitalPayTypeRO);
+                 }
+             });
+             parallelThreadExecute.await();
+           
+             return storeReport2RO;
+```
+
+
+
+后期计划任务
+1. 将集合里面对象合在一起
+输入
+{1:200}
+{2:300}
+{1:200}
+结果
+{1:400}
+{2:300}
+其中后面可能是对象
+2. 解析mybatis sql
+3. 向mybatis中注入上下文

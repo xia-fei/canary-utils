@@ -10,7 +10,7 @@ public class ParallelThreadExecuteTest {
     @Test
     public void testParallel(){
         ParallelThreadExecute parallelThreadExecute=new ParallelThreadExecute();
-        parallelThreadExecute.addRunnable(new Runnable() {
+        parallelThreadExecute.run(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -21,13 +21,13 @@ public class ParallelThreadExecuteTest {
                 System.out.println("11");
             }
         });
-        parallelThreadExecute.addRunnable(new Runnable() {
+        parallelThreadExecute.run(new Runnable() {
             @Override
             public void run() {
                 System.out.println("22");
             }
         });
-        parallelThreadExecute.addRunnable(new Runnable() {
+        parallelThreadExecute.run(new Runnable() {
             @Override
             public void run() {
                 System.out.println("33");

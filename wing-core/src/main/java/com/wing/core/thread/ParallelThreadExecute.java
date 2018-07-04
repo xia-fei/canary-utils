@@ -16,7 +16,7 @@ public class ParallelThreadExecute {
     private List<Runnable> runnableList = new ArrayList<>();
 
 
-    public void addRunnable(Runnable runnable) {
+    public void run(Runnable runnable) {
         runnableList.add(runnable);
     }
 
