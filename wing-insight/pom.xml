@@ -9,8 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>wing-insight</artifactId>
-    <version>${global.version}</version>
+        <artifactId>wing-insight</artifactId>
+        <version>${global.version}</version>
     <dependencies>
         <dependency>
             <groupId>com.wing</groupId>
@@ -22,6 +22,7 @@
             <groupId>com.qccr.framework</groupId>
             <artifactId>insight</artifactId>
             <version>1.6.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

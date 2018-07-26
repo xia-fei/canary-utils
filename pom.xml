@@ -15,8 +15,9 @@
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <global.version>2.4.0</global.version>
+        <global.version>3.0.0</global.version>
         <argLine>-Dfile.encoding=UTF-8</argLine>
+        <spring.version>4.3.18.RELEASE</spring.version>
     </properties>
     <dependencies>
         <dependency>
@@ -28,7 +29,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.1.7.RELEASE</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
