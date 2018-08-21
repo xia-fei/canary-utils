@@ -1,6 +1,5 @@
 package com.wing.core.util;
 
-import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,17 +7,13 @@ import org.slf4j.LoggerFactory;
  * @author 夏飞
  */
 public class ExceptionUtils {
-    private static final Logger LOGGER=LoggerFactory.getLogger(ExceptionUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionUtils.class);
 
 
-    public static String getExceptionMessage(RuntimeException e) {
+    public static String getExceptionMessage(Exception e) {
         try {
-            if (NullPointerException.class.isInstance(e)) {
-                String[] stackFrames = org.apache.commons.lang3.exception.ExceptionUtils.getStackFrames(e);
-                return getFramesMessage(stackFrames, 3);
-            } else {
-                return fixedLenString(e.getMessage());
-            }
+            String[] stackFrames = org.apache.commons.lang3.exception.ExceptionUtils.getStackFrames(e);
+            return getFramesMessage(stackFrames, 3);
         } catch (RuntimeException e2) {
             LOGGER.error("获取excel执行异常信息失败", e2);
         }
@@ -35,12 +30,4 @@ public class ExceptionUtils {
         return stringBuilder.toString();
     }
 
-
-    private static String fixedLenString(String str) {
-        if (!Strings.isNullOrEmpty(str) && str.length() > 1024) {
-            return str.substring(0, 1024);
-        } else {
-            return str;
-        }
-    }
 }
