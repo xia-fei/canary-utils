@@ -14,6 +14,12 @@ model分三部分
 `MockData#mock(Type)`
 
 ## excel导出工具类
+
+``` xml
+<groupId>com.wing</groupId>
+<artifactId>wing-excel</artifactId>
+<version>3.3.0</version>
+```
 ```java
       List<Cat> list=new ArrayList<>();
         list.add(new Cat("111",1));
