@@ -19,6 +19,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.wing</groupId>
+            <artifactId>wing-excel</artifactId>
+            <version>${global.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.qccr.framework</groupId>
             <artifactId>insight</artifactId>
             <version>1.6.2</version>
