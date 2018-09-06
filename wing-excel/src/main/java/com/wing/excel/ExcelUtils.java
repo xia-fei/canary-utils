@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class ExcelUtils {
 
-    private static void setFileName(String fileName, HttpServletResponse httpServletResponse) {
+    public static void setFileName(String fileName, HttpServletResponse httpServletResponse) {
         httpServletResponse.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         try {
             fileName = URLEncoder.encode(fileName, "UTF-8");
