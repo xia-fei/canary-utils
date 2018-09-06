@@ -41,7 +41,7 @@ model分三部分
         }, header,new FileOutputStream(new File("/1.xlsx")));
         //一行代码导出,详细看源码
 ```
-
+BeanHandler 和 header都是非必填项目  
 
 ## mock测试使用指南  
 pom引用
