@@ -13,7 +13,28 @@ model分三部分
 此方法是生成测试RO的入口,之所以用Type作为参数是为了支持List泛型结构  
 `MockData#mock(Type)`
 
-
+## excel导出工具类
+```java
+      List<Cat> list=new ArrayList<>();
+        list.add(new Cat("111",1));
+        list.add(new Cat("222",2));
+        list.add(new Cat("333",3));
+        list.add(new Cat("444",4));
+        list.add(new Cat("555",5));
+        LinkedHashMap<String,String> header=new LinkedHashMap<>();
+        //设置excel title 顺序有效
+        header.put("age","猫年龄");
+        header.put("name","猫名称");
+        
+        ExcelUtils.export(list, new BeanHandler<Cat>() {
+            //处理对象里面的值 比如金额除100
+                    @Override
+                    public void handler(Cat cat) {
+                        cat.setAge(cat.getAge()+100);
+                    }
+        }, header,new FileOutputStream(new File("/1.xlsx")));
+        //一行代码导出,详细看源码
+```
 
 
 ## mock测试使用指南  

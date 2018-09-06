@@ -32,7 +32,7 @@ public class Main {
                     public void handler(Cat cat) {
                         cat.setAge(cat.getAge()+100);
                     }
-                }, header,new FileOutputStream(new File("/1.xlsx")));
+        }, header,new FileOutputStream(new File("/1.xlsx")));
 
     }
 
