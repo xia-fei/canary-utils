@@ -48,7 +48,7 @@ public class ConfigMain {
         try {
             new ConfigStorage().saveSuperProperties(configProperties);
         } catch (IOException e) {
-            throw Throwables.propagate(e);
+            LOGGER.error("配置文件 拉去取失败,将读取本地配置文件",e);
         }
 
     }
