@@ -45,10 +45,15 @@ public class ConfigMain {
         buildAppEnv(locationProperties);
         LOGGER.info("加载AppEnv配置信息" + AppEnv.get().toString());
         Properties configProperties = configHttp.doLoadSuperConfig(AppEnv.get());
-        try {
-            new ConfigStorage().saveSuperProperties(configProperties);
-        } catch (IOException e) {
-            LOGGER.error("配置文件 拉去取失败,将读取本地配置文件",e);
+        if (configProperties != null) {
+            try {
+                new ConfigStorage().saveSuperProperties(configProperties);
+            } catch (IOException e) {
+                LOGGER.error("配置文件保存失败", e);
+                throw new RuntimeException(e);
+            }
+        } else {
+            LOGGER.error("配置中文心文件拉取失败将从本地读取");
         }
 
     }
