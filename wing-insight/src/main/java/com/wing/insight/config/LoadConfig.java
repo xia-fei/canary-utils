@@ -19,12 +19,12 @@ import java.util.Properties;
 public class LoadConfig {
 
     private AppNameContext appNameContext;
-    private Logger LOGGER= LoggerFactory.getLogger(LoadConfig.class);
+    private Logger LOGGER = LoggerFactory.getLogger(LoadConfig.class);
 
-    private Properties properties=null;
+    private Properties superConfigProperties = null;
 
     public Properties getProperties() {
-        return properties;
+        return superConfigProperties;
     }
 
     public LoadConfig(String appName) {
@@ -32,20 +32,40 @@ public class LoadConfig {
         startLoad();
     }
 
-    private void startLoad(){
+    private void startLoad() {
         Properties locationProperties = getLocationProperties();
         buildAppEnv(locationProperties);
-        LOGGER.info("加载AppEnv配置信息" + AppEnv.get().toString());
-        properties = new ConfigHttp().doLoadSuperConfig(AppEnv.get());
-        properties.setProperty("app_name",this.appNameContext.getAppName());
+        if (AppEnv.get().isNeedSuperConfig()) {
+            LOGGER.info("加载AppEnv配置信息" + AppEnv.get().toString());
+            superConfigProperties = new ConfigHttp().doLoadSuperConfig(AppEnv.get());
+            if (superConfigProperties == null) {
+                superConfigProperties = loadLocationFile();
+                LOGGER.info("配置中心获取不到,从本地获取");
+            }
+        } else {
+            superConfigProperties = loadLocationFile();
+            LOGGER.info("needSuperConfig=false,从本地获取");
+        }
+
+        superConfigProperties.setProperty("app_name", this.appNameContext.getAppName());
+
     }
 
-    public void setSystemProperties(){
-        for(Map.Entry<Object,Object> entry:this.properties.entrySet()){
-            System.getProperties().put(entry.getKey(),entry.getValue());
+    private Properties loadLocationFile() {
+        try {
+            Properties locationProperties = new Properties();
+            locationProperties.load(new FileInputStream(AppEnv.get().getSuperConfigFile()));
+            return locationProperties;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    public void setSystemProperties() {
+        for (Map.Entry<Object, Object> entry : this.superConfigProperties.entrySet()) {
+            System.getProperties().put(entry.getKey(), entry.getValue());
+        }
+    }
 
 
     private Properties getLocationProperties() {
