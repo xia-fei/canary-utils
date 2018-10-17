@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -39,6 +40,11 @@ public class LoadConfig {
         properties.setProperty("app_name",this.appNameContext.getAppName());
     }
 
+    public void setSystemProperties(){
+        for(Map.Entry<Object,Object> entry:this.properties.entrySet()){
+            System.getProperties().put(entry.getKey(),entry.getValue());
+        }
+    }
 
 
 
