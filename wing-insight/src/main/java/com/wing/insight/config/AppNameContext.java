@@ -11,6 +11,10 @@ import java.io.File;
 public class AppNameContext {
     private String appName;
 
+    public String getAppName() {
+        return appName;
+    }
+
     public AppNameContext(String appName) {
         this.appName = appName;
     }
