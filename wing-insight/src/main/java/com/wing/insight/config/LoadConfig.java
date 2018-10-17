@@ -36,6 +36,7 @@ public class LoadConfig {
         buildAppEnv(locationProperties);
         LOGGER.info("加载AppEnv配置信息" + AppEnv.get().toString());
         properties = new ConfigHttp().doLoadSuperConfig(AppEnv.get());
+        properties.setProperty("app_name",this.appNameContext.getAppName());
     }
 
 
