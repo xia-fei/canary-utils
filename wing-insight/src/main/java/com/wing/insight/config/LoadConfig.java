@@ -91,7 +91,10 @@ public class LoadConfig {
         String projectNumber = locationProperties.getProperty("project_number");
         String projectEnv = locationProperties.getProperty("project_env");
         String projectSubEnv = locationProperties.getProperty("sub_env");
-        AppEnv.create(appNameContext.getAppName(), projectNumber, projectEnv, projectSubEnv, Boolean.valueOf(readFromSuperConfig), getConfigFile(projectNumber, projectEnv));
+        AppEnv.create(appNameContext.getAppName(), projectNumber, projectEnv, projectSubEnv, isYes(readFromSuperConfig), getConfigFile(projectNumber, projectEnv));
+    }
+    private boolean isYes(String readFromSuperConfig){
+        return readFromSuperConfig.equalsIgnoreCase("yes");
     }
 
     private File getConfigFile(String projectNumber, String projectEnv) {
