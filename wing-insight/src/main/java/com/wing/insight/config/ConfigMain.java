@@ -63,7 +63,11 @@ public class ConfigMain {
         String projectNumber = locationProperties.getProperty("project_number");
         String projectEnv = locationProperties.getProperty("project_env");
         String projectSubEnv = locationProperties.getProperty("sub_env");
-        AppEnv.create(appName, projectNumber, projectEnv, projectSubEnv, Boolean.valueOf(readFromSuperConfig), getConfigFile(projectNumber, projectEnv));
+        AppEnv.create(appName, projectNumber, projectEnv, projectSubEnv, isYes(readFromSuperConfig), getConfigFile(projectNumber, projectEnv));
+    }
+
+    private boolean isYes(String needConfig){
+        return needConfig.equalsIgnoreCase("yes");
     }
 
     /**
