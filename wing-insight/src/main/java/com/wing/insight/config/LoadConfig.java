@@ -33,25 +33,25 @@ public class LoadConfig {
     }
 
     private void startLoad() {
-        Properties locationProperties = getLocationProperties();
-        buildAppEnv(locationProperties);
+        buildAppEnv(getLocationProperties());
+
+        //从配置中心拉取数据
         if (isMachineConfig || AppEnv.get().isNeedSuperConfig()) {
             LOGGER.info("加载AppEnv配置信息" + AppEnv.get().toString());
             superConfigProperties = new ConfigHttp().doLoadSuperConfig(AppEnv.get());
-            try {
-                new ConfigStorage().saveSuperProperties(superConfigProperties);
-            } catch (IOException e) {
-                LOGGER.warn("配置信息保存失败");
+            if (superConfigProperties != null) {
+                try {
+                    new ConfigStorage().saveSuperProperties(superConfigProperties);
+                    return;
+                } catch (IOException | RuntimeException e) {
+                    LOGGER.warn("配置信息保存失败", e);
+                }
             }
-            if (superConfigProperties == null) {
-                superConfigProperties = loadLocationFile();
-                LOGGER.info("配置中心获取失败从本地加载");
-            }
-        } else {
-            superConfigProperties = loadLocationFile();
-            LOGGER.info("needSuperConfig=false,从本地获取");
         }
+        superConfigProperties = loadLocationFile();
         superConfigProperties.setProperty("app_name", this.appNameContext.getAppName());
+        LOGGER.info("加载本地配置文件");
+
     }
 
 
