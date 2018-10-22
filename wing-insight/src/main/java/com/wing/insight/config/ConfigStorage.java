@@ -22,7 +22,6 @@ public class ConfigStorage {
         if (!configFile.getParentFile().exists()) {
             configFile.getParentFile().mkdirs();
         }
-
         //保存
         superProperties.store(new FileOutputStream(configFile), "super_config");
         LOGGER.info("配件文件保存成功 path:{}", configFile.getAbsolutePath());

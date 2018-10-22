@@ -49,7 +49,6 @@ public class ConfigHttp {
                         + projectNumber + "&environment=" + environment + "&subEnv=" + subEnv +"]");
                 return null;
             }
-
             //将远程配置存入Properties中
             Properties superProperties = new Properties();
             List<Map<Object, Object>> dataList = (List<Map<Object, Object>>)jsonData.get("data");

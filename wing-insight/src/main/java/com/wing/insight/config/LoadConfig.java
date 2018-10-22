@@ -1,6 +1,5 @@
 package com.wing.insight.config;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 import com.qccr.framework.insight.listener.AppEnv;
 import org.slf4j.Logger;
@@ -22,6 +21,7 @@ public class LoadConfig {
     private Logger LOGGER = LoggerFactory.getLogger(LoadConfig.class);
 
     private Properties superConfigProperties = null;
+    private boolean isMachineConfig = false;
 
     public Properties getProperties() {
         return superConfigProperties;
@@ -35,21 +35,25 @@ public class LoadConfig {
     private void startLoad() {
         Properties locationProperties = getLocationProperties();
         buildAppEnv(locationProperties);
-        if (AppEnv.get().isNeedSuperConfig()) {
+        if (isMachineConfig || AppEnv.get().isNeedSuperConfig()) {
             LOGGER.info("加载AppEnv配置信息" + AppEnv.get().toString());
             superConfigProperties = new ConfigHttp().doLoadSuperConfig(AppEnv.get());
+            try {
+                new ConfigStorage().saveSuperProperties(superConfigProperties);
+            } catch (IOException e) {
+                LOGGER.warn("配置信息保存失败");
+            }
             if (superConfigProperties == null) {
                 superConfigProperties = loadLocationFile();
-                LOGGER.info("配置中心获取不到,从本地获取");
+                LOGGER.info("配置中心获取失败从本地加载");
             }
         } else {
             superConfigProperties = loadLocationFile();
             LOGGER.info("needSuperConfig=false,从本地获取");
         }
-
         superConfigProperties.setProperty("app_name", this.appNameContext.getAppName());
-
     }
+
 
     private Properties loadLocationFile() {
         try {
@@ -74,6 +78,7 @@ public class LoadConfig {
             locationFile = appNameContext.getUserLocationFile();
         } else if (appNameContext.getMachineLocationFile().exists()) {
             locationFile = appNameContext.getMachineLocationFile();
+            isMachineConfig = true;
         } else {
             throw new IllegalArgumentException("请初始化配置中心信息");
         }
@@ -91,15 +96,11 @@ public class LoadConfig {
         String projectNumber = locationProperties.getProperty("project_number");
         String projectEnv = locationProperties.getProperty("project_env");
         String projectSubEnv = locationProperties.getProperty("sub_env");
-        AppEnv.create(appNameContext.getAppName(), projectNumber, projectEnv, projectSubEnv, isYes(readFromSuperConfig), getConfigFile(projectNumber, projectEnv));
-    }
-    private boolean isYes(String readFromSuperConfig){
-        return readFromSuperConfig.equalsIgnoreCase("yes");
+        AppEnv.create(appNameContext.getAppName(), projectNumber, projectEnv, projectSubEnv, isYes(readFromSuperConfig), appNameContext.getConfigFile(projectNumber, projectEnv));
     }
 
-    private File getConfigFile(String projectNumber, String projectEnv) {
-        String fileName = Joiner.on("_").join(this.appNameContext.getAppName(), projectNumber, projectEnv.toUpperCase(), "super_config.properties");
-        return new File(appNameContext.getBasePath() + fileName);
+    private boolean isYes(String readFromSuperConfig) {
+        return readFromSuperConfig != null && readFromSuperConfig.equalsIgnoreCase("yes");
     }
 
 
