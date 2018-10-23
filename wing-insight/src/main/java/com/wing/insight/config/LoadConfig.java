@@ -1,6 +1,7 @@
 package com.wing.insight.config;
 
 import com.google.common.base.Throwables;
+import com.qccr.framework.insight.component.InsightRuntimeContext;
 import com.qccr.framework.insight.listener.AppEnv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,9 +66,34 @@ public class LoadConfig {
         }
     }
 
+    /**
+     * 设置insight和系统变量上下文
+     */
+    public void setEnvContext(){
+        setSystemProperties();
+        setInsightProps();
+    }
+
+
+    /**
+     * 设置系统环境变量
+     */
     public void setSystemProperties() {
         for (Map.Entry<Object, Object> entry : this.superConfigProperties.entrySet()) {
             System.getProperties().put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    /**
+     * 设置insight环境变量
+     */
+    public void setInsightProps(){
+        InsightRuntimeContext insightRuntimeContext=new InsightRuntimeContext();
+        try {
+            insightRuntimeContext.afterPropertiesSet();
+            InsightRuntimeContext.get().getProps().put(this.getProperties());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
