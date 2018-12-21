@@ -5,6 +5,15 @@ public class NestRO {
     private CatRO catRO;
 
     private String name;
+    private NestRO child;
+
+    public NestRO getChild() {
+        return child;
+    }
+
+    public void setChild(NestRO child) {
+        this.child = child;
+    }
 
     public String getName() {
         return name;
