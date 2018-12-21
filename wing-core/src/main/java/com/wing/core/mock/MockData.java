@@ -72,7 +72,7 @@ public class MockData {
         ObjectPath prev = objectPath.prev;
         while (prev != null) {
             String className = prev.item.getName();
-            if (classCount.getUnchecked(className) > 3) {
+            if (classCount.getUnchecked(className) > 5) {
                 return true;
             }
             classCount.put(className, classCount.getUnchecked(className) + 1);
