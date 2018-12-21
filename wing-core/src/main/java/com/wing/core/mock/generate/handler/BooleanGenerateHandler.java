@@ -1,8 +1,6 @@
 package com.wing.core.mock.generate.handler;
 
-import com.wing.core.mock.generate.ClassGenerateHandler;
-
-public class BooleanGenerateHandler extends AbstractGenerateHandler implements ClassGenerateHandler {
+public class BooleanGenerateHandler extends AbstractGenerateHandler {
     private final String DEFAULT_VALUE[] = {"true", "false"};
 
     @Override
@@ -11,7 +9,14 @@ public class BooleanGenerateHandler extends AbstractGenerateHandler implements C
     }
 
     @Override
-    public Object generateValue(Class valueClass, String[] mockValues) {
-        return Boolean.valueOf(randomValue(mockValues,DEFAULT_VALUE));
+    Object mockInstance(String str, Class mockClass) {
+        return Boolean.valueOf(str);
     }
+
+    @Override
+    String defaultValue(Class clazz) {
+        return getRandom(DEFAULT_VALUE);
+    }
+
+
 }
