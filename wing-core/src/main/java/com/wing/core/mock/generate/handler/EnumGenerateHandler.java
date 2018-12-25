@@ -1,5 +1,10 @@
 package com.wing.core.mock.generate.handler;
 
+import com.wing.core.mock.generate.AbstractGenerateHandler;
+import org.springframework.util.Assert;
+
+import java.util.Random;
+
 public class EnumGenerateHandler extends AbstractGenerateHandler {
 
     @Override
@@ -8,21 +13,16 @@ public class EnumGenerateHandler extends AbstractGenerateHandler {
     }
 
     @Override
-    String defaultValue(Class clazz) {
+    public String defaultValue(Class clazz) {
         return null;
     }
 
     @Override
-    Object mockInstance(String str, Class mockClass) {
-        return null;
+    public Object mockInstance(String str, Class mockClass) {
+        Assert.isNull(str, "暂时不支持枚举类自定义赋值");
+        Object[] enumConstants = mockClass.getEnumConstants();
+        return enumConstants[new Random().nextInt(enumConstants.length)];
     }
 
-    public static void main(String[] args) {
-       Color red=Color.Red;
-       System.out.println();
-    }
-}
 
-enum Color{
-    Red,Yellow,Green
 }

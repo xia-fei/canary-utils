@@ -38,6 +38,7 @@ public class MockData {
     }
 
 
+
     private Object generateTree(Type type, Field field, ObjectPath objectPath) {
         if(isOverDepth(objectPath)){
             return null;
@@ -61,6 +62,8 @@ public class MockData {
         throw new IllegalArgumentException("未能转换的类型:" + String.valueOf(type));
     }
 
+
+
     private boolean isOverDepth(ObjectPath objectPath) {
 
         final LoadingCache<String, Integer> classCount = CacheBuilder.newBuilder().build(new CacheLoader<String, Integer>() {
@@ -76,10 +79,8 @@ public class MockData {
                 return true;
             }
             classCount.put(className, classCount.getUnchecked(className) + 1);
-            System.out.print(className + "->");
             prev = prev.prev;
         }
-        System.out.println();
 
         return false;
     }

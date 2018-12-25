@@ -1,8 +1,10 @@
 package com.wing.core.mock.generate.handler;
 
+import com.wing.core.mock.generate.AbstractGenerateHandler;
+
 import java.util.Random;
 
-public class StringGenerateHandler extends AbstractGenerateHandler  {
+public class StringGenerateHandler extends AbstractGenerateHandler {
 
     @Override
     public boolean canHandler(Class clazz) {
@@ -10,12 +12,12 @@ public class StringGenerateHandler extends AbstractGenerateHandler  {
     }
 
     @Override
-    String defaultValue(Class clazz) {
+    public  String defaultValue(Class clazz) {
         return generateRandomString();
     }
 
     @Override
-    Object mockInstance(String str, Class mockClass) {
+    public  Object mockInstance(String str, Class mockClass) {
         return str;
     }
 

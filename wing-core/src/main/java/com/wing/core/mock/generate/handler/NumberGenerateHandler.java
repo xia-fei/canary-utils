@@ -1,5 +1,6 @@
 package com.wing.core.mock.generate.handler;
 
+import com.wing.core.mock.generate.AbstractGenerateHandler;
 import org.springframework.util.NumberUtils;
 
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class NumberGenerateHandler extends AbstractGenerateHandler  {
+public class NumberGenerateHandler extends AbstractGenerateHandler {
 
 
     private final Set<Class<?>> BASIC_NUMBER_TYPES;
@@ -29,12 +30,12 @@ public class NumberGenerateHandler extends AbstractGenerateHandler  {
     }
 
     @Override
-    String defaultValue(Class clazz) {
+    public String defaultValue(Class clazz) {
         return randomNumberText(isDecimals(clazz));
     }
 
     @Override
-    Object mockInstance(String str, Class mockClass) {
+    public Object mockInstance(String str, Class mockClass) {
         return NumberUtils.parseNumber(str, getNumberClass(mockClass));
     }
 

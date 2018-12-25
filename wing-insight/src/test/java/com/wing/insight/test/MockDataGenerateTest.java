@@ -1,10 +1,13 @@
 package com.wing.insight.test;
 
 import com.alibaba.fastjson.JSON;
+import com.qccr.knife.result.Result;
 import com.wing.core.mock.MockData;
 import com.wing.insight.test.bean.Dog;
 import com.wing.insight.test.bean.NestRO;
 import org.junit.Test;
+
+import java.lang.reflect.Method;
 
 public class MockDataGenerateTest {
 
@@ -22,9 +25,12 @@ public class MockDataGenerateTest {
         System.out.println(JSON.toJSONString(new MockData().mock(NestRO.class)));
     }
 
+    @Test
+    public void testQccrResult() throws NoSuchMethodException {
+        Method method=MockDataGenerateTest.class.getMethod("result");
 
-
-
+    }
 
 
 }
+

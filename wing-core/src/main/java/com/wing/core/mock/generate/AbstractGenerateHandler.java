@@ -1,9 +1,16 @@
-package com.wing.core.mock.generate.handler;
+package com.wing.core.mock.generate;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Random;
 
 public abstract class AbstractGenerateHandler {
-     String getRandom(String[] values) {
+     protected String getRandom(String[] values) {
         return values[new Random().nextInt(values.length)];
     }
 
@@ -18,18 +25,18 @@ public abstract class AbstractGenerateHandler {
      *
      * @return 对象实例
      */
-    abstract String defaultValue(Class clazz);
+    public abstract String defaultValue(Class clazz);
 
     /**
      * 根据 字段注解配置的值
      *
      * @return 字符串
      */
-    abstract Object mockInstance(String str,Class mockClass);
+    public abstract Object mockInstance(String str, Class mockClass);
 
 
 
-    public Object generateValue(Class mockClass, String[] mockValues) {
+    Object generateValue(Class mockClass, String[] mockValues) {
         String mockValue;
         if (mockValues != null) {
             //使用字段配置
@@ -40,6 +47,5 @@ public abstract class AbstractGenerateHandler {
         }
         return mockInstance(mockValue,mockClass);
     }
-
 
 }
