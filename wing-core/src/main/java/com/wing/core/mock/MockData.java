@@ -1,13 +1,9 @@
 package com.wing.core.mock;
 
-import ch.qos.logback.core.pattern.parser.Node;
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Lists;
 import com.wing.core.mock.generate.DataGenerateFactory;
-import com.wing.facade.mock.MockValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -17,30 +13,35 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MockData {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MockData.class);
     private final DataGenerateFactory DATA_GENERATE_FACTORY;
-
+    private final CacheLoader<String, Integer> COUNTER_LOADER = new CacheLoader<String, Integer>() {
+        @Override
+        public Integer load(String key) throws Exception {
+            return 1;
+        }
+    };
 
     public MockData() {
         DATA_GENERATE_FACTORY = new DataGenerateFactory();
     }
 
 
+    /**
+     * mock入口
+     */
     public Object mock(Type type) {
         ObjectPath root = new ObjectPath(null, (Class) type);
-        return generateTree(type, null, root);
+        return createAllObject(type, null, root);
     }
 
 
-
-    private Object generateTree(Type type, Field field, ObjectPath objectPath) {
-        if(isOverDepth(objectPath)){
+    private Object createAllObject(Type type, Field field, ObjectPath objectPath) {
+        if (isOverDepth(objectPath)) {
             return null;
         }
         if (type instanceof Class) {
@@ -50,28 +51,24 @@ public class MockData {
             if (mockValue != null) {
                 return mockValue;
             } else {
-                return eachObjectTree(typeClass, objectPath);
+                return createStandardObject(typeClass, objectPath);
             }
-        } else if (isListClass(type)) {
-            List<Object> list = Lists.newArrayList();
-            for (int i = 0; i < 3; i++) {
-                list.add(generateTree(getListClass(type), field, objectPath));
-            }
-            return list;
+        } else if (isCollection(type)) {
+            return createCollectionObject((ParameterizedType) type, field, objectPath);
         }
         throw new IllegalArgumentException("未能转换的类型:" + String.valueOf(type));
     }
 
+    private boolean isCollection(Type type) {
+        ParameterizedType parameterizedType = (ParameterizedType) type;
+        return Collection.class.isAssignableFrom((Class<?>) parameterizedType.getRawType());
+    }
 
-
+    /**
+     * 判断递归调用
+     */
     private boolean isOverDepth(ObjectPath objectPath) {
-
-        final LoadingCache<String, Integer> classCount = CacheBuilder.newBuilder().build(new CacheLoader<String, Integer>() {
-            @Override
-            public Integer load(String key) throws Exception {
-                return 1;
-            }
-        });
+        LoadingCache<String, Integer> classCount = CacheBuilder.newBuilder().build(COUNTER_LOADER);
         ObjectPath prev = objectPath.prev;
         while (prev != null) {
             String className = prev.item.getName();
@@ -86,25 +83,41 @@ public class MockData {
     }
 
 
-    private Class getListClass(Type type) {
-        ParameterizedType parameterizedType = (ParameterizedType) type;
-        return (Class) parameterizedType.getActualTypeArguments()[0];
+    @SuppressWarnings("unchecked")
+    private Object createCollectionObject(ParameterizedType parameterizedType, Field field, ObjectPath objectPath) {
+        if (parameterizedType.getRawType() instanceof Class) {
+            Class collectionClass = (Class) parameterizedType.getRawType();
+            Collection collection = (Collection) createCollectionInstance(collectionClass);
+            collection.add(createAllObject(parameterizedType.getActualTypeArguments()[0], field, objectPath));
+            collection.add(createAllObject(parameterizedType.getActualTypeArguments()[0], field, objectPath));
+            collection.add(createAllObject(parameterizedType.getActualTypeArguments()[0], field, objectPath));
+            return collection;
+        }
+        throw new RuntimeException("类型不支持");
+
+
     }
 
-    private boolean isListClass(Type type) {
-        if (type instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) type;
-            return List.class.isAssignableFrom((Class<?>) parameterizedType.getRawType());
+    private Object createCollectionInstance(Class collectionClass) {
+        if (collectionClass.isInterface()) {
+            if (List.class.isAssignableFrom(collectionClass)) {
+                return new ArrayList<>();
+            } else if (Set.class.isAssignableFrom(collectionClass)) {
+                return new HashSet<>();
+            }
+            throw new RuntimeException("不支持的集合类型" + collectionClass.toString());
+        } else {
+            return collectionClass.isInterface();
         }
-        return false;
+
     }
+
 
     /**
      * 遍历对象
      * 用get set方法生成对象
      */
-    private Object eachObjectTree(Class clazz, ObjectPath objectPath) {
-
+    private Object createStandardObject(Class clazz, ObjectPath objectPath) {
         Object mappedObject = BeanUtils.instantiate(clazz);
         PropertyDescriptor[] propertyDescriptors = BeanUtils.getPropertyDescriptors(clazz);
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
@@ -114,7 +127,7 @@ public class MockData {
                     Field propertyField = clazz.getDeclaredField(propertyName);
                     //产生新的节点
                     ObjectPath currentPath = new ObjectPath(objectPath, propertyField.getType());
-                    Object instanceValue = generateTree(propertyDescriptor.getReadMethod().getGenericReturnType(), propertyField, currentPath);
+                    Object instanceValue = createAllObject(propertyDescriptor.getReadMethod().getGenericReturnType(), propertyField, currentPath);
                     propertyDescriptor.getWriteMethod().invoke(mappedObject, instanceValue);
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
                     LOGGER.error("字段设置值异常 fieldName:{},class:{}", propertyName, clazz.toString(), e);
