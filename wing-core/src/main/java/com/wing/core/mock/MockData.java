@@ -123,15 +123,26 @@ public class MockData {
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             if (propertyDescriptor.getWriteMethod() != null && propertyDescriptor.getReadMethod() != null) {
                 String propertyName = propertyDescriptor.getName();
+                Field propertyField=null ;
                 try {
-                    Field propertyField = clazz.getDeclaredField(propertyName);
-                    //产生新的节点
-                    ObjectPath currentPath = new ObjectPath(objectPath, propertyField.getType());
-                    Object instanceValue = createAllObject(propertyDescriptor.getReadMethod().getGenericReturnType(), propertyField, currentPath);
+                    propertyField = clazz.getDeclaredField(propertyName);
+                } catch (NoSuchFieldException e) {
+                    try {
+                        propertyField=clazz.getField(propertyName);
+                    } catch (NoSuchFieldException e1) {
+                        LOGGER.warn("字段没找到异常 fieldName:{},class:{}", propertyName, clazz.toString(), e);
+                    }
+                }
+                //TODO 尝试获取父类private Field字段 读取里面注解 ，不行则改成WriteMethod上的注解
+                //产生新的节点
+                ObjectPath currentPath = new ObjectPath(objectPath, propertyDescriptor.getWriteMethod().getParameterTypes()[0]);
+                Object instanceValue = createAllObject(propertyDescriptor.getReadMethod().getGenericReturnType(), propertyField, currentPath);
+                try {
                     propertyDescriptor.getWriteMethod().invoke(mappedObject, instanceValue);
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
+                } catch (IllegalAccessException | InvocationTargetException e) {
                     LOGGER.error("字段设置值异常 fieldName:{},class:{}", propertyName, clazz.toString(), e);
                 }
+
             }
         }
         return mappedObject;
