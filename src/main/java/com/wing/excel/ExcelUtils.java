@@ -1,4 +1,4 @@
-package com.wing.core.excel;
+package com.wing.excel;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
