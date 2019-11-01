@@ -1,4 +1,4 @@
-package com.wing.core.thread;
+package org.xiafei.canary.thread;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

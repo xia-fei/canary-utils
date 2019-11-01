@@ -1,4 +1,4 @@
-package com.wing.core.thread;
+package org.xiafei.canary.thread;
 
 import java.util.Comparator;
 import java.util.concurrent.RejectedExecutionHandler;

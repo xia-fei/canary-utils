@@ -1,4 +1,4 @@
-package com.wing.core.util;
+package org.xiafei.canary.util;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

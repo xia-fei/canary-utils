@@ -1,4 +1,4 @@
-package com.wing.core.util;
+package org.xiafei.canary.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +10,10 @@ public class ExceptionUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionUtils.class);
 
 
-    public static String getExceptionMessage(Exception e) {
+    public static String getExceptionMessage(Exception e,int n) {
         try {
             String[] stackFrames = org.apache.commons.lang3.exception.ExceptionUtils.getStackFrames(e);
-            return getFramesMessage(stackFrames, 3);
+            return getFramesMessage(stackFrames, n);
         } catch (RuntimeException e2) {
             LOGGER.error("获取excel执行异常信息失败", e2);
         }

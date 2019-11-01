@@ -87,7 +87,7 @@ controller层 `ThreadLocalUtils.set("userId",request.getParameter("userId"));`
 dao层 `ThreadLocalUtils.get("userId")`
 
 
- **`com.wing.core.thread.HeavyThreadExecution`**  
+ **`HeavyThreadExecution`**  
 处理频繁的更新的操作,只需要更新优先级最高的这种任务
 eg:
 ``` java
@@ -150,7 +150,7 @@ eg:
 线程池任务执行完成
 ```
 
- **`com.wing.core.thread.ParallelThreadExecute`**  
+ **`ParallelThreadExecute`**  
 多线程处理不需要同步执行的代码,然后等所有结果完成再返回
 eg:
 ``` java
