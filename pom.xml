@@ -5,11 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.xiafei</groupId>
     <artifactId>canary-utils</artifactId>
+    <packaging>pom</packaging>
     <version>1.0</version>
+    <modules>
+        <module>mock-annotation</module>
+    </modules>
     <properties>
         <spring.version>4.3.21.RELEASE</spring.version>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.xiafei</groupId>
+            <artifactId>mock-annotation</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
